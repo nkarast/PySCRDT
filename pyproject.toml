@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "PySCRDT"
+version = "1.1.0"
+description = "Calculate resonance driving terms from the space charge potential"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Foteini Asvesta", email = "foteini.asvesta@cern.ch" },
+]
+requires-python = ">=3.9"
+dependencies = [
+    "numpy>=1.20",
+    "sympy>=1.8",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Physics",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=7", "pytest-cov"]
+dev  = ["pytest>=7", "pytest-cov", "ruff"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+
+[tool.pyright]
+# sympy uses metaclass-based operator overloading that Pylance cannot model
+# (Symbol * complex, cos(sym)**int, etc.). Suppress the false positives here.
+reportOperatorIssue = false
